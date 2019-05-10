@@ -5,7 +5,7 @@ const Navbar = props => {
   const onClick = () => {
     localStorage.removeItem('jwt');
     props.switchState(0);
-    props.history.push('/');
+    props.history.push('/login');
   };
   return (
     <div className="Navbar ">
