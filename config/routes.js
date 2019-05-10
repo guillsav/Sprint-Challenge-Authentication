@@ -9,12 +9,12 @@ const {authenticate} = require('../auth/authenticate');
 
 module.exports = server => {
   server.post('/api/register', validation, register);
-  server.post('/api/login', login);
+  server.post('/api/login', validation, login);
   server.get('/api/jokes', authenticate, getJokes);
 };
 
 function validation(req, res, next) {
-  const schema = Joi.object.keys({
+  const schema = Joi.object().keys({
     username: Joi.string()
       .alphanum()
       .min(4)
@@ -26,7 +26,7 @@ function validation(req, res, next) {
   });
 
   Joi.validate(req.body, schema, (e, result) => {
-    if (err) {
+    if (e) {
       res
         .status(400)
         .json({message: 'Please provide a username and password!'});
@@ -60,7 +60,7 @@ async function login(req, res, next) {
     const {username, password} = req.body;
     const foundUser = await Users.getUserByName(username);
     const isMatch = await bcrypt.compare(password, foundUser.password);
-    if (isMatch) {
+    if (foundUser && isMatch) {
       const token = generateToken(foundUser);
       res.status(200).json({message: `Welcome ${foundUser.username}!`, token});
       next();
@@ -92,10 +92,8 @@ function generateToken(user) {
     subject: user.id,
     username: user.username
   };
-
   const options = {
     expiresIn: '1h'
   };
-
   return jwt.sign(payload, secret.jwtSecret, options);
 }
