@@ -29,9 +29,24 @@ Implement an User Authentication System in order to access the jokes from the Jo
 Demonstrate your understanding of this week's concepts by answering the following free-form questions. Edit this document to include your answers after each question. Make sure to leave a blank line above and below your answer so it is clear and easy to read by your project manager.
 
 1. What is the purpose of using _sessions_?
+
+Sessions purposes is to store informations about a particular client (ie: Web browser, device, etc.). With those informations stored on the server a user doesn't have to re-login into an application to use it for a certain amount of time given by the session. As long as the user is using the same client.
+
 1. What does bcrypt do to help us store passwords in a secure manner.
+
+bcrypt help users by hashing their password into hash code, so the password is never saved to the database as plain text.
+
 1. What does bcrypt do to slow down attackers?
+
+Bcrypt had the notion of time to the decryption of the password. The bcrypt.hash function takes 2 arguments and the second is the number of rounds that the password will be hashed. The higher the rounds number the longer it takes to decrypt the password.
+
 1. What are the three parts of the JSON Web Token?
+
+The 3 parts are: Header, Payload, the verified signature.
+
+**Header**: Is the algorithm and the token type.
+**Payload**: Contains Data about the user. Therefore no sensitive information (ie. Password, credit card informations, SSN, etc) should be stored in the payload.
+**Verified Signature**: It serve to ensure that the token hasn't been tempured with. It also contains the secret variable which is a string given at the creation of the token is used like a signature. That string is usually stored in an evironment variable, so therefore hidden in production.
 
 ## Project Set Up
 
@@ -48,9 +63,9 @@ Follow these steps for completing your project:
 
 - [ ] `cd` into the root of the project and run `yarn` to install dependencies.
 - [ ] Once you have your `node_modules` go ahead and run `yarn server` or `npm run server` to start your node server.
-- [ ] Submit a Pull-Request to merge <firstName-lastName> Branch into master (student's  Repo).
+- [ ] Submit a Pull-Request to merge <firstName-lastName> Branch into master (student's Repo).
 - [ ] Add your Project Manager as a Reviewer on the Pull-request
-- [ ] PM then will count the HW as done by  merging the branch back into master.
+- [ ] PM then will count the HW as done by merging the branch back into master.
 
 Helpful Tip on Testing this Project:
 
